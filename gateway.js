@@ -10,7 +10,7 @@ apiProxy.on('error', (err, req, res) => {
   res.status(500).send('Proxy Error');
 });
 
-app.all("/service1*", (req, res) => {
+app.all("/service1/*", (req, res) => {
   // service1
   console.log(req.path)
   apiProxy.web(req, res, {
@@ -25,10 +25,17 @@ app.all("/service2/*", (req, res) => {
   });
 });
 
+app.all("/service3/*", (req, res) => {
+  // service3
+  apiProxy.web(req, res, {
+    target: 'https://www.google.com',
+  });
+});
+
 app.all("*", (req, res) => {
   // front end server / react
   apiProxy.web(req, res, {
-    target: 'http://localhost:3000',
+    target: 'http://localhost:4000',
   });
 });
 
